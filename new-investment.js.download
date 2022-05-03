@@ -1,0 +1,66 @@
+jQuery(document).ready(function () {
+// alert('got here')
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "preventDuplicates": false,
+        "onclick": null,
+        "timeOut": "7000",
+    };
+
+
+    $('#investmentForm').submit(function (event) {
+        event.preventDefault();
+        var payoutOption = $('#payoutOption').val();
+        var min_investment = $('#min_investment').val();
+        var amount = $('#amount').val();
+        $("#submitButton").prop('disabled', true);
+        $("#submitButton").addClass('m-loader');
+        var form_values = $('#investmentForm').serializeArray();
+        console.log(form_values);
+        console.log(min_investment, ' ', amount);
+        $('.error').text("");
+
+
+        if (+amount < +min_investment) {
+            toastr.error("Amount must be greater than the minimum investment", "Error");
+            $("#submitButton").removeClass('m-loader');
+            $("#submitButton").prop('disabled', false);
+            $('#amountError').text('Amount must be greater than the minimum investment');
+        } else if (payoutOption == 'selectPayout') {
+            $("#submitButton").removeClass('m-loader');
+            $("#submitButton").prop('disabled', false);
+            $('#payoutOptionError').text('Please choose a payout option');
+            toastr.error("Please choose a payout option", "Error");
+        } else {
+            $.ajax({
+                method: "POST",
+                url: "api/new-investment.php",
+                data: form_values,
+                dataType: 'json',
+                encode: true
+            })
+                .done(function (data) {
+                    if (!data.success) {
+                        console.log(data);
+                        toastr.error("Incorrect Input. Please Try Again", "");
+                        $("#submitButton").removeClass('m-loader');
+                        $("#submitButton").prop('disabled', false);
+                    } else {
+                        toastr.success("success", "");
+                        $("#submitButton").removeClass('m-loader');
+                        $("#submitButton").prop('disabled', false);
+                        $('.section1').hide();
+                        $('.section2').show();
+                    }
+                })
+                .fail(function () {
+                    toastr.error("Network Error", "");
+                    $("#submitButton").prop('disabled', false);
+                    $("#submitButton").removeClass('m-loader');
+                });
+        }
+    });
+});

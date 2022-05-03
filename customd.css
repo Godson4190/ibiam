@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css?family=Sofia");
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display");
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+.plan_card {
+  text-align: center;
+  padding: 20px;
+  max-width: 300px; }
+  .plan_card .card_head {
+    padding: 5px 10px;
+    font-weight: 600;
+    font-size: 20px; }
+  .plan_card .card_body {
+    padding: 5px 10px; }
+    .plan_card .card_body ul {
+      padding: 0px; }
+    .plan_card .card_body li {
+      list-style-type: none;
+      margin-bottom: 10px;
+      font-size: 11px;
+      font-family: Montserrat; }
+      .plan_card .card_body li span {
+        font-weight: bold; }
+  .plan_card .card_footer {
+    padding: 5px 10px; }
+    .plan_card .card_footer .button {
+      display: inline-block;
+      background-color: #117bdc;
+      padding: 5px 15px;
+      color: #ffffff;
+      font-family: Montserrat;
+      cursor: pointer;
+      border: none; }
+      .plan_card .card_footer .button:hover {
+        color: #ffffff; }
+
+.wallet_address_input {
+  font-size: 14px;
+  font-weight: bold;
+  color: red !important; }
+
+@media (max-width: 767.98px) {
+  .wallet_address_input {
+    font-size: 12px;
+    font-weight: bold; } }
+
+/*# sourceMappingURL=custom.css.map */

@@ -1,0 +1,68 @@
+jQuery(document).ready(function () {
+
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "preventDuplicates": false,
+        "onclick": null,
+        "timeOut": "5000",
+    };
+
+    var walletAddress = '';
+
+
+    $('#withdrawalForm').submit(function (event) {
+
+        event.preventDefault();
+        $("#submitButton").prop('disabled', true);
+        $("#submitButton").addClass('m-loader');
+        var form_values = $('#withdrawalForm').serializeArray();
+        var amount = form_values.find(function (item) { return item.name == 'amount'; }).value;
+        var accountBalance = form_values.find(function (item) { return item.name == 'accountBalance'; }).value;
+        console.log(form_values);
+        console.log(amount,'amount', accountBalance, 'accountBalance');
+        $('.error').text("");
+
+
+        if (+amount > +accountBalance) {
+            toastr.error("Amount is greater than your current balance", "Error");
+            $("#submitButton").removeClass('m-loader');
+            $("#submitButton").prop('disabled', false);
+            $('#amountError').text('Amount is greater than your current balance');
+        } else {
+            $.ajax({
+                method: "POST",
+                url: "api/withdraw-fund.php",
+                data: form_values,
+                dataType: 'json',
+                encode: true
+            })
+                .done(function (data) {
+                    if (!data.success) {
+                        console.log(data);
+                        toastr.error("Incorrect Input. Please Try Again", "");
+                        $("#submitButton").removeClass('m-loader');
+                        $("#submitButton").prop('disabled', false);
+                        if (data.errors.amount) {
+                            $('#amountError').text(data.errors.email);
+                        }
+                    } else {
+                        toastr.success("success", "");
+                        $('#section2').show();
+                        $('#section1').hide();
+                        // transactionId = data.transactionId;
+                    }
+                })
+                .fail(function () {
+                    toastr.error("Network Error", "");
+                    $("#submitButton").prop('disabled', false);
+                    $("#submitButton").removeClass('m-loader');
+                });
+        }
+
+
+    });
+});
