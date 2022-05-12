@@ -282,9 +282,9 @@ div.im-colormask > div {
     
     <h5 class="font-weight-bold">Your Investment request was delivered successfully. Please make your payment to the bitcoin wallet address below.</h5>
     <div class="input-group my-5">
-    <input type="text" class="form-control text-center wallet_address_input" value="13BEt39rztuHARgoC9sWLxfVBMJmAguYKJ" id="m_clipboard_1" readonly="">
+    <input type="text" class="form-control text-center wallet_address_input" value="13BEt39rztuHARgoC9sWLxfVBMJmAguYKJ" id="address">
     <div class="input-group-append">
-    <a href="#" class="btn btn-secondary" data-clipboard="true" data-clipboard-target="#m_clipboard_1"><i class="la la-copy mr-2"></i>Copy</a>
+    <a href="#" onclick="myFunction()" class="btn btn-secondary" data-clipboard="true" data-clipboard-target="#m_clipboard_1"><i class="la la-copy mr-2"></i>Copy</a>
     </div>
     </div>
     <a class="btn btn-primary mt-3" href="account.html">Return to Home</a>
@@ -373,6 +373,28 @@ div.im-colormask > div {
 </div>
 </div>
 </div>
+
+<script type="text/javascript">
+	function myFunction() {
+  /* Get the text field */
+  var copyText = document.getElementById("address");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the text inside the text field */
+  navigator.clipboard.writeText(copyText.value);
+
+  /* Alert the copied text */
+  alert("Copied: " + copyText.value);
+}
+
+
+	//function copyToCb() {
+	//	navigator.clipboard.writeText("13BEt39rztuHARgoC9sWLxfVBMJmAguYKJ");
+	//}
+</script>
 </body>
 </html>
                 
